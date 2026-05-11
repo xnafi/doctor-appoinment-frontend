@@ -114,9 +114,9 @@ function speakWithBrowser(text: string) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
 
   speakText(text, {
-    preferredLangs: ["bn", "hi"],
+    preferredLangs: ["en-US", "en-GB", "en"],
     strictLanguage: false,
-    fallbackLang: "bn-BD",
+    fallbackLang: "en-US",
     preferFemale: true,
     rate: 0.93,
     pitch: 1,
@@ -131,13 +131,13 @@ function speakAnnouncement(text: string) {
 
 export function announcePatient(serialNumber: number, name: string): void {
   const cleanName = name?.trim() || "Patient";
-  const message = `সিরিয়াল নাম্বার ${serialNumber}। পেশেন্ট নেম ${cleanName}। ভেতরে আসুন।`;
+  const message = `Serial number ${serialNumber}. Patient name ${cleanName}. Please come in.`;
   speakAnnouncement(message);
 }
 
 export function announceNextPatient(serialNumber: number, name: string): void {
   const cleanName = name?.trim() || "Patient";
-  const message = `পেশেন্ট নেম ${cleanName}। পরের জন রেডি থাকবে।`;
+  const message = `Patient name ${cleanName}. Next patient please be ready.`;
 
   speakAnnouncement(message);
 }

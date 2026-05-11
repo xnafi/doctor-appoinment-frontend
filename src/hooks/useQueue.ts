@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { getSocket, SocketEvents, SocketRooms } from "@/lib/socket";
 import { queueApi } from "@/lib/api";
 import { useQueueStore } from "@/store/queueStore";
-import { announcePatient, announceNextPatient } from "@/lib/voice";
+import { announcePatient } from "@/lib/voice";
 import type { QueueSnapshot, Appointment } from "@/types";
 
 interface UseQueueOptions {
@@ -59,11 +59,10 @@ export function useQueue({ room, voice = false }: UseQueueOptions) {
       }
     });
 
-    socket.on(SocketEvents.PATIENT_NEXT, (patient: Appointment) => {
-      if (voice) {
-        // Small delay so current announcement finishes first
-        setTimeout(() => announceNextPatient(patient.serialNumber, patient.patientName), 6_000);
-      }
+    socket.on(SocketEvents.PATIENT_NEXT, () => {
+      // Intentionally no voice announcement here.
+      // Next-patient audio should only be triggered by explicit doctor action
+      // (PATIENT_CALLED), not automatically on PATIENT_NEXT events.
     });
 
     return () => {
