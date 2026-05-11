@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { getSocket, SocketEvents, SocketRooms } from "@/lib/socket";
 import { queueApi } from "@/lib/api";
 import { useQueueStore } from "@/store/queueStore";
-import { announcePatient } from "@/lib/voice";
+import { announcePatient, announceNextPatient } from "@/lib/voice";
 import type { QueueSnapshot, Appointment } from "@/types";
 
 interface UseQueueOptions {
@@ -18,6 +18,7 @@ interface UseQueueOptions {
 export function useQueue({ room, voice = false }: UseQueueOptions) {
   const { setSnapshot, setConnected, setLoading, setLastCalled } = useQueueStore();
   const lastCalledIdRef = useRef<string | null>(null);
+  const lastManualCallAtRef = useRef<number>(0);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -55,14 +56,20 @@ export function useQueue({ room, voice = false }: UseQueueOptions) {
       // Prevent double-announcing same patient
       if (voice && patient.id !== lastCalledIdRef.current) {
         lastCalledIdRef.current = patient.id;
+        lastManualCallAtRef.current = Date.now();
         announcePatient(patient.serialNumber, patient.patientName);
       }
     });
 
-    socket.on(SocketEvents.PATIENT_NEXT, () => {
-      // Intentionally no voice announcement here.
-      // Next-patient audio should only be triggered by explicit doctor action
-      // (PATIENT_CALLED), not automatically on PATIENT_NEXT events.
+    socket.on(SocketEvents.PATIENT_NEXT, (patient: Appointment) => {
+      if (!voice) return;
+
+      // Only announce "next patient be ready" if it follows a real/manual call flow.
+      // This avoids unrelated automatic next events from triggering audio unexpectedly.
+      const justCalledPatient = Date.now() - lastManualCallAtRef.current < 10_000;
+      if (!justCalledPatient) return;
+
+      setTimeout(() => announceNextPatient(patient.serialNumber, patient.patientName), 6_000);
     });
 
     return () => {
