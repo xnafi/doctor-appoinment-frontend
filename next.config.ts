@@ -1,18 +1,38 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    // Ensure Turbopack treats this project directory as the workspace root
-    // to avoid lockfile-based root inference warnings.
-    root: process.cwd(),
+  // Enable React strict mode for better developer experience
+  reactStrictMode: true,
+
+  // Compress responses
+  compress: true,
+
+  // Image optimization config
+  images: {
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.googleusercontent.com",
+      },
+    ],
   },
 
-  // Allow cross-origin requests to the backend in dev
-  async rewrites() {
+  // Security headers
+  async headers() {
     return [
       {
-        source: "/api/backend/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000"}/api/:path*`,
+        source: "/(.*)",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-XSS-Protection", value: "1; mode=block" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
       },
     ];
   },
