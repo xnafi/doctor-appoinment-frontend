@@ -1,46 +1,30 @@
-// src/app/page.tsx
-import Link from "next/link";
-import { Monitor, UserPlus, Stethoscope } from "lucide-react";
+import { Footer } from "../components/layout/Footer";
+import { Navbar } from "../components/layout/Navbar";
+import { AboutSection } from "../components/sections/AboutSection";
+import { AppointmentSection } from "../components/sections/AppointmentSection";
+import { ContactSection } from "../components/sections/ContactSection";
+import { HeroSection } from "../components/sections/HeroSection";
+import { ScheduleSection } from "../components/sections/ScheduleSection";
+import { ServicesSection } from "../components/sections/ServicesSection";
+import { StatsSection } from "../components/sections/StatsSection";
+import { TestimonialsSection } from "../components/sections/TestimonialsSection";
 
-export default function HomePage() {
+
+export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-8 p-8">
-      <div className="text-center slide-up">
-        <h1 className="text-4xl font-bold text-white mb-2">🏥 Doctor Queue</h1>
-        <p className="text-slate-400">Select your role to continue</p>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl slide-up">
-        <Link href="/display" className="group">
-          <div className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-sky-500 rounded-2xl p-8 flex flex-col items-center gap-4 transition-all duration-200">
-            <Monitor className="w-10 h-10 text-sky-400 group-hover:scale-110 transition-transform" />
-            <div className="text-center">
-              <p className="font-semibold text-white">Display Screen</p>
-              <p className="text-xs text-slate-400 mt-1">Waiting room board</p>
-            </div>
-          </div>
-        </Link>
-
-        <Link href="/book" className="group">
-          <div className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500 rounded-2xl p-8 flex flex-col items-center gap-4 transition-all duration-200">
-            <UserPlus className="w-10 h-10 text-emerald-400 group-hover:scale-110 transition-transform" />
-            <div className="text-center">
-              <p className="font-semibold text-white">Book Appointment</p>
-              <p className="text-xs text-slate-400 mt-1">Patient self-booking</p>
-            </div>
-          </div>
-        </Link>
-
-        <Link href="/doctor" className="group">
-          <div className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-purple-500 rounded-2xl p-8 flex flex-col items-center gap-4 transition-all duration-200">
-            <Stethoscope className="w-10 h-10 text-purple-400 group-hover:scale-110 transition-transform" />
-            <div className="text-center">
-              <p className="font-semibold text-white">Doctor Panel</p>
-              <p className="text-xs text-slate-400 mt-1">Manage queue</p>
-            </div>
-          </div>
-        </Link>
-      </div>
-    </main>
+    <>
+      <Navbar />
+      <main id="main-content">
+        <HeroSection />
+        <AboutSection />
+        <ServicesSection />
+        <StatsSection />
+        <AppointmentSection />
+        <ScheduleSection />
+        <TestimonialsSection />
+        <ContactSection />
+      </main>
+      <Footer />
+    </>
   );
 }
