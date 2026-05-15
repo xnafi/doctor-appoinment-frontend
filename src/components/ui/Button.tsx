@@ -1,51 +1,111 @@
-// src/components/ui/Button.tsx
-import clsx from "clsx";
-import { Loader2 } from "lucide-react";
+import React from "react";
+import Link from "next/link";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "danger" | "ghost";
-  size?: "sm" | "md" | "lg";
-  loading?: boolean;
+type ButtonVariant = "primary" | "secondary" | "outline-white" | "ghost";
+type ButtonSize = "sm" | "md" | "lg" | "xl";
+
+interface ButtonBaseProps {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  className?: string;
+  children: React.ReactNode;
   icon?: React.ReactNode;
+  iconPosition?: "left" | "right";
+  disabled?: boolean;
+  loading?: boolean;
 }
 
-const variants = {
-  primary:   "bg-sky-500 hover:bg-sky-400 text-white disabled:bg-sky-800",
-  secondary: "bg-slate-700 hover:bg-slate-600 text-white disabled:bg-slate-800",
-  danger:    "bg-red-600 hover:bg-red-500 text-white disabled:bg-red-900",
-  ghost:     "bg-transparent hover:bg-slate-700 text-slate-300 disabled:opacity-40",
+interface ButtonAsButton extends ButtonBaseProps {
+  as?: "button";
+  type?: "button" | "submit" | "reset";
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  href?: never;
+}
+
+interface ButtonAsLink extends ButtonBaseProps {
+  as: "link";
+  href: string;
+  type?: never;
+  onClick?: never;
+}
+
+type ButtonProps = ButtonAsButton | ButtonAsLink;
+
+const sizeMap: Record<ButtonSize, string> = {
+  sm: "btn-sm",
+  md: "btn-md",
+  lg: "btn-lg",
+  xl: "btn-xl",
 };
 
-const sizes = {
-  sm: "px-3 py-1.5 text-sm rounded-lg",
-  md: "px-4 py-2 text-sm rounded-xl",
-  lg: "px-6 py-3 text-base rounded-xl",
+const variantMap: Record<ButtonVariant, string> = {
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  "outline-white": "btn-outline-white",
+  ghost: "btn-ghost",
 };
 
 export function Button({
   variant = "primary",
   size = "md",
-  loading = false,
-  icon,
+  className = "",
   children,
-  className,
-  disabled,
-  ...props
+  icon,
+  iconPosition = "left",
+  disabled = false,
+  loading = false,
+  ...rest
 }: ButtonProps) {
+  const classes = [
+    "btn",
+    variantMap[variant],
+    sizeMap[size],
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const content = (
+    <>
+      {loading ? (
+        <svg
+          className="animate-spin"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          aria-hidden="true"
+        >
+          <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" opacity="0.25" />
+          <path d="M21 12a9 9 0 01-9-9" />
+        </svg>
+      ) : (
+        icon && iconPosition === "left" && icon
+      )}
+      {children}
+      {!loading && icon && iconPosition === "right" && icon}
+    </>
+  );
+
+  if (rest.as === "link") {
+    return (
+      <Link href={rest.href} className={classes} aria-disabled={disabled}>
+        {content}
+      </Link>
+    );
+  }
+
   return (
     <button
-      {...props}
+      type={(rest as ButtonAsButton).type ?? "button"}
+      className={classes}
       disabled={disabled || loading}
-      className={clsx(
-        "inline-flex items-center justify-center gap-2 font-medium transition-all duration-150",
-        "disabled:cursor-not-allowed",
-        variants[variant],
-        sizes[size],
-        className
-      )}
+      onClick={(rest as ButtonAsButton).onClick}
+      aria-disabled={disabled || loading}
     >
-      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : icon}
-      {children}
+      {content}
     </button>
   );
 }
