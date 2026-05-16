@@ -54,7 +54,7 @@ export function BlogSection() {
   return (
     <section
       id="blog"
-      className="section-padding bg-[var(--color-surface-white)]"
+      className="section-padding bg-(--color-surface-white)"
     >
       <div className="container-site">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">

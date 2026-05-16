@@ -36,7 +36,7 @@ const contactInfo = [
 
 export function ContactSection() {
   return (
-    <section id="contact" className="section-padding bg-[var(--color-surface-white)]">
+    <section id="contact" className="section-padding bg-(--color-surface-white)">
       <div className="container-site">
         <SectionHeading
           label="Get In Touch"
@@ -55,12 +55,12 @@ export function ContactSection() {
                 className="w-12 h-12 rounded-xl flex items-center justify-center"
                 style={{ background: "rgba(26,79,122,0.08)" }}
               >
-                <Icon size={22} className="text-[var(--color-primary)]" aria-hidden="true" />
+                <Icon size={22} className="text-(--color-primary)" aria-hidden="true" />
               </div>
-              <h3 className="text-heading-md text-[var(--color-text-primary)]">{title}</h3>
+              <h3 className="text-heading-md text-(--color-text-primary)">{title}</h3>
               <div className="flex flex-col gap-0.5">
                 {lines.map((line, i) => (
-                  <p key={i} className="text-body-sm text-[var(--color-text-secondary)]">
+                  <p key={i} className="text-body-sm text-(--color-text-secondary)">
                     {line}
                   </p>
                 ))}
@@ -69,7 +69,7 @@ export function ContactSection() {
                 href={link}
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
-                className="text-body-sm font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-dark)] transition-colors mt-auto"
+                className="text-body-sm font-semibold text-(--color-accent) hover:text-[var(--color-accent-dark)] transition-colors mt-auto"
               >
                 {linkLabel} →
               </a>

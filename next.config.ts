@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   // Enable React strict mode for better developer experience
@@ -6,6 +7,11 @@ const nextConfig: NextConfig = {
 
   // Compress responses
   compress: true,
+
+  // Explicit Turbopack root to avoid incorrect workspace inference on Windows
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
 
   // Image optimization config
   images: {

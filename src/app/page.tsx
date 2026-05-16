@@ -1,3 +1,4 @@
+import { BlogSection } from "@/components/sections/BlogSection";
 import { Footer } from "../components/layout/Footer";
 import { Navbar } from "../components/layout/Navbar";
 import { AboutSection } from "../components/sections/AboutSection";
@@ -22,6 +23,7 @@ export default function Home() {
         <AppointmentSection />
         <ScheduleSection />
         <TestimonialsSection />
+        <BlogSection/>
         <ContactSection />
       </main>
       <Footer />
