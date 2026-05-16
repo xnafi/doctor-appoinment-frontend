@@ -1,7 +1,13 @@
 import React from "react";
 import {
-  Stethoscope, Thermometer, Heart, Activity,
-  Pill, Brain, Baby, Eye, ChevronRight
+  Stethoscope,
+  Thermometer,
+  Heart,
+  Activity,
+  Pill,
+  Brain,
+  Baby,
+  Eye,
 } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
@@ -59,13 +65,16 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section id="services" className="section-padding bg-[var(--color-surface-light)]">
+    <section
+      id="services"
+      className="section-padding bg-(--color-surface-light)"
+    >
       <div className="container-site">
         <SectionHeading
           label="Our Services"
           title="Comprehensive Medical Care You Can Trust"
           subtitle="From acute illness to long-term health management — Dr. Tirthankar provides a full range of general medical services."
-          className="mb-12"
+          className="mb-12!"
         />
 
         <ul
@@ -73,10 +82,7 @@ export function ServicesSection() {
           role="list"
         >
           {services.map(({ icon: Icon, title, desc, color }) => (
-            <li
-              key={title}
-              className="card p-6 group cursor-default"
-            >
+            <li key={title} className="card px-4! py-4! group cursor-default">
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300"
                 style={{ background: `${color}14` }}
@@ -88,16 +94,17 @@ export function ServicesSection() {
                   className="group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
-              <h3 className="text-heading-md text-[var(--color-text-primary)] mb-2">{title}</h3>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">{desc}</p>
-              <div className="flex items-center gap-1 mt-4 text-body-xs font-semibold text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                Learn more <ChevronRight size={14} aria-hidden="true" />
-              </div>
+              <h3 className="text-heading-md text-(--color-text-primary) mb-2">
+                {title}
+              </h3>
+              <p className="text-body-sm text-(--color-text-secondary)">
+                {desc}
+              </p>
             </li>
           ))}
         </ul>
 
-        <div className="flex justify-center mt-10">
+        <div className="flex justify-center mt-10!">
           <Button as="link" href="#appointment" variant="primary" size="lg">
             Book a Consultation
           </Button>

@@ -43,17 +43,16 @@ export function HeroSection() {
 
             <h1 className="text-display-xl text-white animate-fade-up delay-100">
               Good Health{" "}
-              <span
-                className="italic"
-                style={{ color: "var(--color-accent)" }}
-              >
+              <span className="italic" style={{ color: "var(--color-accent)" }}>
                 Moves Us
               </span>{" "}
               Forward
             </h1>
 
             <p className="text-body-lg text-white/75 max-w-lg animate-fade-up delay-200">
-              Dr. Tirthankar Bhattacharjee — MBBS — offers compassionate, evidence-based general medical care. From everyday ailments to chronic disease management, your wellbeing is our mission.
+              Dr. Tirthankar Bhattacharjee — MBBS — offers compassionate,
+              evidence-based general medical care. From everyday ailments to
+              chronic disease management, your wellbeing is our mission.
             </p>
 
             {/* Trust badges */}
@@ -63,7 +62,11 @@ export function HeroSection() {
                   key={badge.label}
                   className="flex items-center gap-1.5 text-body-xs text-white/80 bg-white/10 px-3 py-1.5 rounded-full"
                 >
-                  <badge.icon size={12} className="text-[var(--color-accent)]" aria-hidden="true" />
+                  <badge.icon
+                    size={12}
+                    className="text-(--color-accent)"
+                    aria-hidden="true"
+                  />
                   {badge.label}
                 </span>
               ))}
@@ -98,17 +101,23 @@ export function HeroSection() {
               className="flex items-center gap-3 w-fit mt-2 group animate-fade-up delay-500"
               aria-label="Call Dr. Tirthankar: 01312-612890"
             >
-              <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-[var(--color-accent)]">
+              <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-(--color-accent)">
                 <div
-                  className="absolute inset-0 rounded-full bg-[var(--color-accent)] opacity-50"
+                  className="absolute inset-0 rounded-full bg-(--color-accent) opacity-50"
                   style={{ animation: "pulse-ring 2s ease-out infinite" }}
                   aria-hidden="true"
                 />
-                <Phone size={20} className="text-white relative z-10" aria-hidden="true" />
+                <Phone
+                  size={20}
+                  className="text-white relative z-10"
+                  aria-hidden="true"
+                />
               </div>
               <div>
-                <span className="block text-body-xs text-white/60">Call for appointment</span>
-                <span className="block text-body-md font-semibold text-white group-hover:text-[var(--color-accent)] transition-colors">
+                <span className="block text-body-xs text-white/60">
+                  Call for appointment
+                </span>
+                <span className="block text-body-md font-semibold text-white group-hover:text-(--color-accent) transition-colors">
                   01312-612890
                 </span>
               </div>
@@ -118,7 +127,7 @@ export function HeroSection() {
           {/* Visual */}
           <div className="relative hidden lg:flex justify-center items-end animate-fade-in delay-300">
             {/* Main doctor image */}
-            <div className="relative w-[420px] h-[480px] rounded-2xl overflow-hidden shadow-[var(--shadow-lg)]">
+            <div className="relative w-105 h-120 rounded-2xl overflow-hidden shadow-(--shadow-lg)">
               <PlaceholderImage
                 width={420}
                 height={480}
@@ -129,29 +138,47 @@ export function HeroSection() {
 
             {/* Floating card — experience */}
             <div
-              className="absolute -left-8 top-1/4 bg-white rounded-xl p-4! shadow-(--shadow-lg) w-40 "
+              className="absolute -left-8 top-1/4 bg-white rounded-xl px-4! py-2! shadow-(--shadow-lg) w-40 "
               aria-hidden="true"
             >
-              <p className="text-display-md font-bold text-(--color-primary)">6+</p>
-              <p className="text-body-xs text-(--color-text-secondary) mt-0.5">Years of Experience</p>
+              <p className="text-display-md font-bold text-(--color-primary)">
+                6+
+              </p>
+              <p className="text-body-xs text-(--color-text-secondary) mt-0.5">
+                Years of Experience
+              </p>
             </div>
 
             {/* Floating card — patients */}
             <div
-              className="absolute -right-4 bottom-1/4 bg-(--color-accent) rounded-xl p-4! shadow-(--shadow-accent) w-40 text-white"
+              className="absolute -right-4 bottom-1/4 bg-(--color-accent) rounded-xl px-4! py-2! shadow-(--shadow-accent) w-40 text-white"
               aria-hidden="true"
             >
               <p className="text-display-md font-bold">100k+</p>
-              <p className="text-body-xs opacity-85 mt-0.5">Satisfied Patients</p>
+              <p className="text-body-xs opacity-85 mt-0.5">
+                Satisfied Patients
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Wave divider */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none" aria-hidden="true">
-        <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="w-full h-12">
-          <path d="M0 48L1440 48L1440 0C1200 40 960 50 720 30C480 10 240 40 0 0L0 48Z" fill="white" />
+      <div
+        className="absolute bottom-0 left-0 w-full overflow-hidden leading-none"
+        aria-hidden="true"
+      >
+        <svg
+          viewBox="0 0 1440 48"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          className="w-full h-12"
+        >
+          <path
+            d="M0 48L1440 48L1440 0C1200 40 960 50 720 30C480 10 240 40 0 0L0 48Z"
+            fill="white"
+          />
         </svg>
       </div>
     </section>

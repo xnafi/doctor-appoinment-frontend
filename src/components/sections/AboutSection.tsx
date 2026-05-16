@@ -33,7 +33,7 @@ export function AboutSection() {
       <div className="container-site">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Image side */}
-          <div className="relative">
+          <div className="relative mx-auto!">
             <div className="relative rounded-2xl overflow-hidden shadow-(--shadow-lg) aspect-4/5 max-w-md mx-auto lg:mx-0">
               <PlaceholderImage
                 width={480}
