@@ -8,6 +8,54 @@ type AppointmentPayload = {
     note?: string;
 };
 
+export async function GET() {
+    try {
+        const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
+
+        if (!apiBaseUrl) {
+            return NextResponse.json(
+                { success: false, message: "API base URL is not configured" },
+                { status: 500 },
+            );
+        }
+
+        const upstreamResponse = await fetch(`${apiBaseUrl}/api/appointments`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cache: "no-store",
+        });
+
+        const responseJson = (await upstreamResponse.json().catch(() => null)) as
+            | { message?: string; error?: string; data?: unknown }
+            | null;
+
+        if (!upstreamResponse.ok) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message:
+                        responseJson?.message ||
+                        responseJson?.error ||
+                        "Failed to fetch appointments",
+                },
+                { status: upstreamResponse.status },
+            );
+        }
+
+        return NextResponse.json({
+            success: true,
+            data: responseJson?.data,
+        });
+    } catch {
+        return NextResponse.json(
+            { success: false, message: "Failed to fetch appointments" },
+            { status: 500 },
+        );
+    }
+}
+
 export async function POST(req: Request) {
     try {
         const body = (await req.json()) as AppointmentPayload;

@@ -172,12 +172,9 @@ export function AppointmentSection() {
                 <h3 className="text-heading-lg text-(--color-primary)">
                   Appointment Requested!
                 </h3>
-                <p className="text-body-md text-(--color-text-secondary) max-w-sm">
-                  Thank you! We&apos;ll confirm your appointment at{" "}
-                  <strong>01312-612890</strong> within 2 hours.
-                </p>
+
                 {bookingNumber ? (
-                  <p className="text-body-md text-(--color-primary)">
+                  <p className="text-body-lg font-bold text-(--color-primary)">
                     Your booking number is <strong>#{bookingNumber}</strong>.
                   </p>
                 ) : null}

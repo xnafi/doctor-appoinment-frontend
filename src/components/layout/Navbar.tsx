@@ -108,13 +108,13 @@ export function Navbar() {
             </button>
 
             {/* Desktop Nav */}
-            <ul className="hidden lg:flex items-center gap-1">
+            <ul className="hidden lg:flex items-center gap-3!">
               {navLinks.map((link) => (
                 <li key={link.target}>
                   <button
                     type="button"
                     onClick={() => scrollToTarget(link.target)}
-                    className="px-4 py-2 text-body-sm font-medium text-(--color-text-secondary) rounded hover:text-(--color-primary) hover:bg-(--color-surface-light) transition-colors duration-200 appearance-none bg-transparent border-0"
+                    className="px-4 py-2 text-body-sm font-bold uppercase text-(--color-text-secondary) rounded hover:text-(--color-primary) hover:bg-(--color-surface-light) transition-colors duration-200 appearance-none bg-transparent border-0"
                   >
                     {link.label}
                   </button>
@@ -124,15 +124,16 @@ export function Navbar() {
 
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-3">
-              <a
-                href="tel:01312612890"
-                className="flex items-center gap-2 text-body-sm font-semibold text-(--color-primary) hover:text-(--color-accent) transition-colors"
-              >
-                <Phone size={16} />
-                01312-612890
-              </a>
+              <Button as="link" href="/display" variant="secondary" size="sm">
+                Display Board
+              </Button>
 
-              <Button as="link" href="#appointment" variant="primary" size="sm">
+              <Button
+                as="link"
+                href="#appointment"
+                variant="primary"
+                size="sm"
+              >
                 Book Appointment
               </Button>
             </div>
@@ -218,6 +219,13 @@ export function Navbar() {
 
             {/* Footer CTA */}
             <div className="pt-4! mt-4! border-t border-(--color-surface-muted)">
+              <a
+                href="/display"
+                className="inline-flex mb-3! text-body-sm font-semibold text-(--color-primary) hover:text-(--color-accent) transition-colors"
+              >
+                Open Display Board
+              </a>
+
               <a
                 href="tel:01312612890"
                 className="flex items-center gap-2 text-body-sm font-semibold text-(--color-primary) mb-4!"
