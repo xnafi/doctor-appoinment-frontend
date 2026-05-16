@@ -14,7 +14,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative h-[122vh]  md:h-[99vh] xl:h-[95vh] 2xl:h-[94vh] overflow-hidden  bg-linear-to-br from-(--color-surface-dark) via-[#0f2d4a] to-(--color-primary)"
+      className="relative h-[95vh]  md:h-[99vh] xl:h-[95vh] 2xl:h-[94vh] overflow-hidden  bg-linear-to-br from-(--color-surface-dark) via-[#0f2d4a] to-(--color-primary)"
       aria-label="Hero — Dr. Tirthankar Bhattacharjee"
     >
       {/* Background decoration */}
