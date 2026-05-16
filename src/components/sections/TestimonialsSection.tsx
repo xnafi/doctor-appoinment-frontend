@@ -59,7 +59,7 @@ function StarRating({ count }: { count: number }) {
 
 export function TestimonialsSection() {
   return (
-    <section id="testimonials" className="section-padding bg-[var(--color-surface-light)]">
+    <section id="testimonials" className="section-padding bg-(--color-surface-light)">
       <div className="container-site">
         <SectionHeading
           label="Testimonials"
