@@ -12,6 +12,11 @@ type AppointmentItem = {
   status?: string;
 };
 
+type QueueCardItem = {
+  serialNumber?: number;
+  patientName?: string;
+};
+
 type ApiResponse = {
   success?: boolean;
   message?: string;
@@ -19,16 +24,20 @@ type ApiResponse = {
 };
 
 function toAppointments(data: unknown): AppointmentItem[] {
-  if (Array.isArray(data)) return data as AppointmentItem[];
+  let items: AppointmentItem[] = [];
 
-  if (data && typeof data === "object") {
+  if (Array.isArray(data)) {
+    items = data as AppointmentItem[];
+  } else if (data && typeof data === "object") {
     const obj = data as Record<string, unknown>;
     if (Array.isArray(obj.appointments))
-      return obj.appointments as AppointmentItem[];
-    if (Array.isArray(obj.items)) return obj.items as AppointmentItem[];
+      items = obj.appointments as AppointmentItem[];
+    else if (Array.isArray(obj.items))
+      items = obj.items as AppointmentItem[];
   }
 
-  return [];
+  // Filter out internal sentinel/probe entries used for auth validation
+  return items.filter((a) => a.patientName !== "__ping__");
 }
 
 export default function DisplayPage() {
@@ -72,15 +81,49 @@ export default function DisplayPage() {
     };
   }, []);
 
-  const waiting = useMemo(() => {
-    return appointments.filter((a) => {
-      const status = (a.status || "").toLowerCase();
-      return !status || status === "pending" || status === "waiting";
-    });
-  }, [appointments]);
+  const { waiting, current, next } = useMemo(() => {
+    const waitingItems = appointments
+      .filter((a) => {
+        const status = (a.status || "").toLowerCase();
+        return !status || status === "pending" || status === "waiting";
+      })
+      .sort(
+        (a, b) => (a.serialNumber ?? Infinity) - (b.serialNumber ?? Infinity),
+      );
 
-  const current = waiting[0];
-  const next = waiting[1];
+    const servingCandidate = appointments.find((a) => {
+      const status = (a.status || "").toLowerCase();
+      return (
+        status === "serving" || status === "in_progress" || status === "active"
+      );
+    });
+
+    const fallbackCurrentSerial =
+      waitingItems.length > 0 &&
+      typeof waitingItems[0].serialNumber === "number"
+        ? Math.max(1, waitingItems[0].serialNumber - 1)
+        : undefined;
+
+    const currentItem: QueueCardItem | undefined = servingCandidate
+      ? {
+          serialNumber: servingCandidate.serialNumber,
+          patientName: servingCandidate.patientName,
+        }
+      : typeof fallbackCurrentSerial === "number"
+        ? {
+            serialNumber: fallbackCurrentSerial,
+            patientName: "Currently being served",
+          }
+        : undefined;
+
+    const nextItem = waitingItems[0];
+
+    return {
+      waiting: waitingItems,
+      current: currentItem,
+      next: nextItem,
+    };
+  }, [appointments]);
 
   return (
     <>
@@ -125,7 +168,7 @@ export default function DisplayPage() {
                     {current?.serialNumber ? `#${current.serialNumber}` : "—"}
                   </p>
                   <p className="text-heading-md text-(--color-text-primary) mt-2! wrap-break-word">
-                    {current?.patientName || "No patient in queue"}
+                    {current?.patientName || "No active queue"}
                   </p>
                 </div>
 
