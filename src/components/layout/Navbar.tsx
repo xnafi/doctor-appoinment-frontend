@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, Phone, Plus } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import scrollToElement from "scroll-to-element";
+import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
   { label: "Home", target: "#home" },
@@ -17,6 +18,8 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +48,30 @@ export function Navbar() {
 
   const closeMenu = () => setIsOpen(false);
 
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const pendingTarget = window.sessionStorage.getItem("pendingScrollTarget");
+    if (!pendingTarget) return;
+
+    window.sessionStorage.removeItem("pendingScrollTarget");
+
+    requestAnimationFrame(() => {
+      scrollToElement(`#${pendingTarget}`, {
+        offset: -80,
+        ease: "outQuad",
+        duration: 600,
+      });
+    });
+  }, [pathname]);
+
   const scrollToTarget = (target: string) => {
+    if (pathname !== "/") {
+      router.push(`/${target}`);
+      closeMenu();
+      return;
+    }
+
     scrollToElement(target, {
       offset: -80,
       ease: "outQuad",
@@ -53,6 +79,17 @@ export function Navbar() {
     });
 
     closeMenu();
+  };
+
+  const goToAppointment = () => {
+    if (pathname !== "/") {
+      window.sessionStorage.setItem("pendingScrollTarget", "appointment");
+      router.push("/");
+      closeMenu();
+      return;
+    }
+
+    scrollToTarget("#appointment");
   };
 
   return (
@@ -129,8 +166,8 @@ export function Navbar() {
               </Button>
 
               <Button
-                as="link"
-                href="#appointment"
+                as="button"
+                onClick={goToAppointment}
                 variant="primary"
                 size="sm"
               >
@@ -235,8 +272,8 @@ export function Navbar() {
               </a>
 
               <Button
-                as="link"
-                href="#appointment"
+                as="button"
+                onClick={goToAppointment}
                 variant="primary"
                 size="md"
                 className="w-full justify-center"
