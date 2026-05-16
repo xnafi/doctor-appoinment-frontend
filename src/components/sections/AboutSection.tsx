@@ -29,12 +29,12 @@ const highlights = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="section-padding bg-[var(--color-surface-white)]">
+    <section id="about" className="section-padding bg-(--color-surface-white)">
       <div className="container-site">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Image side */}
           <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-[var(--shadow-lg)] aspect-[4/5] max-w-md mx-auto lg:mx-0">
+            <div className="relative rounded-2xl overflow-hidden shadow-(--shadow-lg) aspect-4/5 max-w-md mx-auto lg:mx-0">
               <PlaceholderImage
                 width={480}
                 height={600}
@@ -64,12 +64,12 @@ export function AboutSection() {
               align="left"
             />
 
-            <blockquote className="border-l-4 border-[var(--color-accent)] pl-4 py-1">
-              <p className="text-body-lg italic text-[var(--color-text-secondary)]">
+            <blockquote className="border-l-4 border-(--color-accent) pl-4 py-1">
+              <p className="text-body-lg italic text-(--color-text-secondary)">
                 "Medicine is a form of art. Good health depends on how skilfully a doctor applies their knowledge when dealing with patients."
               </p>
               <footer className="mt-2">
-                <cite className="text-body-sm font-semibold text-[var(--color-primary)] not-italic">
+                <cite className="text-body-sm font-semibold text-(--color-primary) not-italic">
                   — Dr. Tirthankar Bhattacharjee
                 </cite>
               </footer>
@@ -79,17 +79,17 @@ export function AboutSection() {
               {highlights.map(({ icon: Icon, title, desc }) => (
                 <li
                   key={title}
-                  className="flex gap-3 p-4 rounded-xl bg-[var(--color-surface-light)] hover:shadow-[var(--shadow-sm)] transition-shadow"
+                  className="flex gap-3 p-4! rounded-xl bg-(--color-surface-light) hover:shadow-(--shadow-sm) transition-shadow"
                 >
                   <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                    className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
                     style={{ background: "rgba(26,79,122,0.1)" }}
                   >
-                    <Icon size={18} className="text-[var(--color-primary)]" aria-hidden="true" />
+                    <Icon size={18} className="text-(--color-primary)" aria-hidden="true" />
                   </div>
                   <div>
-                    <h3 className="text-body-sm font-semibold text-[var(--color-text-primary)]">{title}</h3>
-                    <p className="text-body-xs text-[var(--color-text-secondary)] mt-0.5">{desc}</p>
+                    <h3 className="text-body-sm font-semibold text-(--color-text-primary)">{title}</h3>
+                    <p className="text-body-xs text-(--color-text-secondary) mt-0.5">{desc}</p>
                   </div>
                 </li>
               ))}
