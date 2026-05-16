@@ -67,7 +67,11 @@ export function Navbar() {
 
   const scrollToTarget = (target: string) => {
     if (pathname !== "/") {
-      router.push(`/${target}`);
+      window.sessionStorage.setItem(
+        "pendingScrollTarget",
+        target.replace("#", ""),
+      );
+      router.push("/");
       closeMenu();
       return;
     }
