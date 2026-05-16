@@ -93,7 +93,7 @@ export function BlogSection() {
               </div>
 
               {/* Body */}
-              <div className="p-5 flex flex-col gap-3 flex-1">
+              <div className="p-5! flex flex-col gap-3 flex-1">
                 {/* Meta */}
                 <div className="flex items-center gap-3 flex-wrap">
                   <span
@@ -103,27 +103,27 @@ export function BlogSection() {
                     <Tag size={11} aria-hidden="true" />
                     {post.category}
                   </span>
-                  <span className="flex items-center gap-1 text-body-xs text-[var(--color-text-muted)]">
+                  <span className="flex items-center gap-1 text-body-xs text-(--color-text-muted)">
                     <Clock size={11} aria-hidden="true" />
                     {post.readTime}
                   </span>
                 </div>
 
-                <h3 className="text-heading-md text-[var(--color-text-primary)] group-hover:text-[var(--color-primary)] transition-colors duration-200">
+                <h3 className="text-heading-md text-(--color-text-primary) group-hover:text-(--color-primary) transition-colors duration-200">
                   {post.title}
                 </h3>
 
-                <p className="text-body-sm text-[var(--color-text-secondary)] line-clamp-3 flex-1">
+                <p className="text-body-sm text-(--color-text-secondary) line-clamp-3 flex-1">
                   {post.excerpt}
                 </p>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-3 border-t border-[var(--color-surface-muted)] mt-auto">
-                  <span className="text-body-xs text-[var(--color-text-muted)]">
+                <div className="flex items-center justify-between pt-3! border-t border-(--color-surface-muted) mt-auto">
+                  <span className="text-body-xs text-(--color-text-muted)">
                     {post.date}
                   </span>
                   <span
-                    className="flex items-center gap-1 text-body-xs font-semibold text-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                    className="flex items-center gap-1 text-body-xs font-semibold text-(--color-accent) opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                     aria-hidden="true"
                   >
                     Read more <ArrowRight size={12} />
