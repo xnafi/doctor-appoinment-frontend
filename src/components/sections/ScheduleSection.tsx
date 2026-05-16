@@ -40,7 +40,7 @@ export function ScheduleSection() {
                 return (
                   <div
                     key={item.day}
-                    className={`grid grid-cols-2 px-6! py-4! border-t border-white/10 transition-colors ${
+                    className={`grid grid-cols-2 px-1! py-3! lg:px-6! lg:py-4! border-t border-white/10 transition-colors ${
                       isToday ? "bg-(--color-accent)/15" : "hover:bg-white/5"
                     }`}
                   >

@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import scrollToElement from "scroll-to-element";
 
 type ButtonVariant = "primary" | "secondary" | "outline-white" | "ghost";
 type ButtonSize = "sm" | "md" | "lg" | "xl";
@@ -56,12 +59,7 @@ export function Button({
   loading = false,
   ...rest
 }: ButtonProps) {
-  const classes = [
-    "btn",
-    variantMap[variant],
-    sizeMap[size],
-    className,
-  ]
+  const classes = ["btn", variantMap[variant], sizeMap[size], className]
     .filter(Boolean)
     .join(" ");
 
@@ -90,6 +88,28 @@ export function Button({
   );
 
   if (rest.as === "link") {
+    if (rest.href.startsWith("#")) {
+      const target = rest.href;
+
+      return (
+        <button
+          type="button"
+          className={classes}
+          disabled={disabled || loading}
+          onClick={() => {
+            scrollToElement(target, {
+              offset: -80,
+              ease: "outQuad",
+              duration: 600,
+            });
+          }}
+          aria-disabled={disabled || loading}
+        >
+          {content}
+        </button>
+      );
+    }
+
     return (
       <Link href={rest.href} className={classes} aria-disabled={disabled}>
         {content}

@@ -5,33 +5,10 @@ import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const departments = [
-  "General Check-up",
-  "Diabetes Management",
-  "Hypertension Care",
-  "Fever & Infections",
-  "Chronic Disease Management",
-  "Paediatric Consultation",
-  "Health Counselling",
-  "Other",
-];
 
-const timeSlots = [
-  "11:00 AM",
-  "12:00 PM",
-  "1:00 PM",
-  "2:00 PM",
-  "3:00 PM",
-  "4:00 PM",
-  "5:00 PM",
-  "6:00 PM",
-  "7:00 PM",
-  "8:00 PM",
-  "9:00 PM",
-  "10:00 PM",
-];
 
 interface FormState {
+  age: string | number | readonly string[] | undefined;
   name: string;
   phone: string;
   department: string;
@@ -47,6 +24,7 @@ const initialForm: FormState = {
   date: "",
   time: "",
   message: "",
+  age: undefined
 };
 
 export function AppointmentSection() {
@@ -164,71 +142,27 @@ export function AppointmentSection() {
                     />
                   </div>
 
-                  {/* Department */}
+                  {/* age */}
                   <div>
                     <label
-                      htmlFor="department"
+                      htmlFor="age"
                       className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
                     >
-                      Department
-                    </label>
-                    <select
-                      id="department"
-                      name="department"
-                      className="input"
-                      value={form.department}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select department</option>
-                      {departments.map((d) => (
-                        <option key={d} value={d}>
-                          {d}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Date */}
-                  <div>
-                    <label
-                      htmlFor="date"
-                      className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
-                    >
-                      Preferred Date
+                      Phone Number{" "}
+                      <span aria-hidden="true" className="text-red-500">
+                        *
+                      </span>
                     </label>
                     <input
-                      id="date"
-                      name="date"
-                      type="date"
+                      id="age"
+                      name="age"
+                      type="number"
+                      required
                       className="input"
-                      value={form.date}
+                      placeholder="age"
+                      value={form.age}
                       onChange={handleChange}
-                      min={new Date().toISOString().split("T")[0]}
                     />
-                  </div>
-
-                  {/* Time */}
-                  <div>
-                    <label
-                      htmlFor="time"
-                      className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
-                    >
-                      Preferred Time
-                    </label>
-                    <select
-                      id="time"
-                      name="time"
-                      className="input"
-                      value={form.time}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select time</option>
-                      {timeSlots.map((t) => (
-                        <option key={t} value={t}>
-                          {t}
-                        </option>
-                      ))}
-                    </select>
                   </div>
 
                   {/* Message */}

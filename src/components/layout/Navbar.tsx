@@ -1,16 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import { Menu, X, Phone, Plus } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import scrollToElement from "scroll-to-element";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Schedule", href: "#schedule" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", target: "#home" },
+  { label: "About", target: "#about" },
+  { label: "Services", target: "#services" },
+  { label: "Schedule", target: "#schedule" },
+  { label: "Testimonials", target: "#testimonials" },
+  { label: "Contact", target: "#contact" },
 ];
 
 export function Navbar() {
@@ -24,6 +24,13 @@ export function Navbar() {
   }, []);
 
   const closeMenu = () => setIsOpen(false);
+  const scrollToTarget = (target: string) => {
+    scrollToElement(target, {
+      offset: -80,
+      ease: "outQuad",
+      duration: 600,
+    });
+  };
 
   return (
     <>
@@ -54,7 +61,12 @@ export function Navbar() {
         <nav className="container-site" aria-label="Main navigation">
           <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}
-            <Link href="#home" className="flex items-center gap-3 group" aria-label="Dr. Tirthankar Bhattacharjee — Home">
+            <button
+              type="button"
+              onClick={() => scrollToTarget("#home")}
+              className="flex items-center gap-3 group"
+              aria-label="Dr. Tirthankar Bhattacharjee — Home"
+            >
               <div className="w-10 h-10 bg-[var(--color-primary)] rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:bg-[var(--color-accent)] transition-colors duration-300">
                 <Plus size={22} strokeWidth={2.5} />
               </div>
@@ -66,18 +78,19 @@ export function Navbar() {
                   General Physician
                 </span>
               </div>
-            </Link>
+            </button>
 
             {/* Desktop links */}
             <ul className="hidden lg:flex items-center gap-1" role="list">
               {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
+                <li key={link.target}>
+                  <button
+                    type="button"
+                    onClick={() => scrollToTarget(link.target)}
                     className="px-4 py-2 text-body-sm font-medium text-[var(--color-text-secondary)] rounded hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-light)] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
                   >
                     {link.label}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -119,17 +132,26 @@ export function Navbar() {
         >
           <div className="container-site py-4 flex flex-col gap-1">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={closeMenu}
+              <button
+                key={link.target}
+                type="button"
+                onClick={() => {
+                  scrollToTarget(link.target);
+                  closeMenu();
+                }}
                 className="px-4 py-3 text-body-md font-medium text-[var(--color-text-secondary)] rounded-lg hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-light)] transition-all"
               >
                 {link.label}
-              </Link>
+              </button>
             ))}
             <div className="pt-2 border-t border-[var(--color-surface-muted)] mt-2">
-              <Button as="link" href="#appointment" variant="primary" size="md" className="w-full justify-center">
+              <Button
+                as="link"
+                href="#appointment"
+                variant="primary"
+                size="md"
+                className="w-full justify-center"
+              >
                 Book Appointment
               </Button>
             </div>
