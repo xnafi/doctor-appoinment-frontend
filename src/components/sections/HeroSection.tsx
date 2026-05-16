@@ -14,7 +14,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-gradient-to-br from-[var(--color-surface-dark)] via-[#0f2d4a] to-[var(--color-primary)]"
+      className="relative h-[122vh]  md:h-[99vh] xl:h-[95vh] 2xl:h-[94vh] overflow-hidden  bg-linear-to-br from-(--color-surface-dark) via-[#0f2d4a] to-(--color-primary)"
       aria-label="Hero — Dr. Tirthankar Bhattacharjee"
     >
       {/* Background decoration */}
@@ -28,12 +28,12 @@ export function HeroSection() {
         }}
       />
       <div
-        className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none"
+        className="absolute top-0 right-0 w-150 h-150 rounded-full blur-[120px] pointer-events-none"
         style={{ background: "rgba(130,180,64,0.08)" }}
         aria-hidden="true"
       />
 
-      <div className="container-site relative">
+      <div className="container-site relative mt-10!">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20 lg:py-28">
           {/* Text */}
           <div className="flex flex-col gap-6">
@@ -129,19 +129,19 @@ export function HeroSection() {
 
             {/* Floating card — experience */}
             <div
-              className="absolute -left-8 top-1/4 bg-white rounded-xl p-4 shadow-[var(--shadow-lg)] w-[160px]"
+              className="absolute -left-8 top-1/4 bg-white rounded-xl p-4! shadow-(--shadow-lg) w-40 "
               aria-hidden="true"
             >
-              <p className="text-display-md font-bold text-[var(--color-primary)]">6+</p>
-              <p className="text-body-xs text-[var(--color-text-secondary)] mt-0.5">Years of Experience</p>
+              <p className="text-display-md font-bold text-(--color-primary)">6+</p>
+              <p className="text-body-xs text-(--color-text-secondary) mt-0.5">Years of Experience</p>
             </div>
 
             {/* Floating card — patients */}
             <div
-              className="absolute -right-4 bottom-1/4 bg-[var(--color-accent)] rounded-xl p-4 shadow-[var(--shadow-accent)] w-[160px] text-white"
+              className="absolute -right-4 bottom-1/4 bg-(--color-accent) rounded-xl p-4! shadow-(--shadow-accent) w-40 text-white"
               aria-hidden="true"
             >
-              <p className="text-display-md font-bold">500+</p>
+              <p className="text-display-md font-bold">100k+</p>
               <p className="text-body-xs opacity-85 mt-0.5">Satisfied Patients</p>
             </div>
           </div>
