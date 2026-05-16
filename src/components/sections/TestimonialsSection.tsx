@@ -72,7 +72,7 @@ export function TestimonialsSection() {
           {testimonials.map((t) => (
             <article
               key={t.name}
-              className="card p-6 flex flex-col gap-4"
+              className="card p-6! flex flex-col gap-4"
             >
               <Quote
                 size={24}
@@ -80,14 +80,14 @@ export function TestimonialsSection() {
                 aria-hidden="true"
               />
               <blockquote>
-                <p className="text-body-md text-[var(--color-text-secondary)] leading-relaxed">
+                <p className="text-body-md text-(--color-text-secondary) leading-relaxed">
                   &ldquo;{t.text}&rdquo;
                 </p>
               </blockquote>
-              <footer className="flex items-center justify-between mt-auto pt-4 border-t border-[var(--color-surface-muted)]">
+              <footer className="flex items-center justify-between mt-auto pt-4 border-t border-(--color-surface-muted)">
                 <div>
-                  <p className="text-body-sm font-semibold text-[var(--color-text-primary)]">{t.name}</p>
-                  <p className="text-body-xs text-[var(--color-text-muted)]">{t.role}</p>
+                  <p className="text-body-sm font-semibold text-(--color-text-primary)">{t.name}</p>
+                  <p className="text-body-xs text-(--color-text-muted)">{t.role}</p>
                 </div>
                 <StarRating count={t.stars} />
               </footer>
@@ -96,14 +96,14 @@ export function TestimonialsSection() {
         </div>
 
         {/* Overall rating */}
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 p-6 rounded-2xl bg-[var(--color-surface-white)] shadow-[var(--shadow-sm)]">
+        <div className="mt-10! flex flex-col sm:flex-row items-center justify-center gap-4 p-6! rounded-2xl bg-(--color-surface-white) shadow-[var(--shadow-sm)]">
           <div className="flex flex-col items-center">
-            <span className="text-display-lg font-bold text-[var(--color-primary)]">5.0</span>
+            <span className="text-display-lg font-bold text-(--color-primary)">5.0</span>
             <StarRating count={5} />
-            <span className="text-body-xs text-[var(--color-text-muted)] mt-1">Average Rating</span>
+            <span className="text-body-xs text-(--color-text-muted) mt-1">Average Rating</span>
           </div>
-          <div className="w-px h-16 bg-[var(--color-surface-muted)] hidden sm:block" aria-hidden="true" />
-          <p className="text-body-md text-[var(--color-text-secondary)] text-center max-w-xs">
+          <div className="w-px h-16 bg-(--color-surface-muted) hidden sm:block" aria-hidden="true" />
+          <p className="text-body-md text-(--color-text-secondary) text-center max-w-xs">
             Based on patient reviews across Facebook, Justdial, and direct feedback from the Moulvibazar community.
           </p>
         </div>

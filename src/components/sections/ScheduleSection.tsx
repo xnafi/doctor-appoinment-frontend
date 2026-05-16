@@ -89,7 +89,7 @@ export function ScheduleSection() {
                 </div>
 
                 <div className="flex gap-3">
-                  <Phone size={18} className="text-(--color-accent) mt-0.5 flex-shrink-0" aria-hidden="true" />
+                  <Phone size={18} className="text-(--color-accent) mt-0.5 shrink-0" aria-hidden="true" />
                   <div className="text-body-sm text-white/70">
                     <strong className="text-white block mb-0.5">Appointment Line</strong>
                     <a href="tel:01312612890" className="hover:text-(--color-accent) transition-colors">
