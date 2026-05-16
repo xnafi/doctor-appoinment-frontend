@@ -17,7 +17,7 @@ const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
 export function ScheduleSection() {
   return (
-    <section id="schedule" className="section-padding bg-[var(--color-surface-dark)]">
+    <section id="schedule" className="section-padding bg-(--color-surface-dark)">
       <div className="container-site">
         <SectionHeading
           label="Opening Hours"
@@ -31,7 +31,7 @@ export function ScheduleSection() {
           {/* Schedule table */}
           <div className="lg:col-span-2">
             <div className="rounded-2xl overflow-hidden border border-white/10">
-              <div className="grid grid-cols-2 px-6 py-3 bg-white/5">
+              <div className="grid grid-cols-2 px-6! py-3! bg-white/5">
                 <span className="text-label text-white/50">Day</span>
                 <span className="text-label text-white/50">Hours</span>
               </div>
@@ -40,8 +40,8 @@ export function ScheduleSection() {
                 return (
                   <div
                     key={item.day}
-                    className={`grid grid-cols-2 px-6 py-4 border-t border-white/10 transition-colors ${
-                      isToday ? "bg-[var(--color-accent)]/15" : "hover:bg-white/5"
+                    className={`grid grid-cols-2 px-6! py-4! border-t border-white/10 transition-colors ${
+                      isToday ? "bg-(--color-accent)/15" : "hover:bg-white/5"
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -58,7 +58,7 @@ export function ScheduleSection() {
                     </div>
                     <span
                       className={`text-body-md flex items-center gap-2 ${
-                        item.open ? "text-[var(--color-accent)]" : "text-white/40"
+                        item.open ? "text-(--color-accent)" : "text-white/40"
                       }`}
                     >
                       {item.open && <Clock size={14} aria-hidden="true" />}
@@ -73,14 +73,14 @@ export function ScheduleSection() {
           {/* Location card */}
           <div className="flex flex-col gap-4">
             <div
-              className="rounded-2xl p-6 flex flex-col gap-5"
+              className="rounded-2xl p-6! flex flex-col gap-5"
               style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
             >
               <h3 className="text-heading-md text-white">Find Us</h3>
 
               <address className="not-italic flex flex-col gap-4">
                 <div className="flex gap-3">
-                  <MapPin size={18} className="text-[var(--color-accent)] mt-0.5 flex-shrink-0" aria-hidden="true" />
+                  <MapPin size={18} className="text-(--color-accent) mt-0.5 shrink-0" aria-hidden="true" />
                   <div className="text-body-sm text-white/70">
                     <strong className="text-white block mb-0.5">Daktar Khana Clinic</strong>
                     Chowmohona, Shomshernagar Road<br />
@@ -89,17 +89,17 @@ export function ScheduleSection() {
                 </div>
 
                 <div className="flex gap-3">
-                  <Phone size={18} className="text-[var(--color-accent)] mt-0.5 flex-shrink-0" aria-hidden="true" />
+                  <Phone size={18} className="text-(--color-accent) mt-0.5 flex-shrink-0" aria-hidden="true" />
                   <div className="text-body-sm text-white/70">
                     <strong className="text-white block mb-0.5">Appointment Line</strong>
-                    <a href="tel:01312612890" className="hover:text-[var(--color-accent)] transition-colors">
+                    <a href="tel:01312612890" className="hover:text-(--color-accent) transition-colors">
                       01312-612890
                     </a>
                   </div>
                 </div>
 
                 <div className="flex gap-3">
-                  <Clock size={18} className="text-[var(--color-accent)] mt-0.5 flex-shrink-0" aria-hidden="true" />
+                  <Clock size={18} className="text-(--color-accent) mt-0.5 shrink-0" aria-hidden="true" />
                   <div className="text-body-sm text-white/70">
                     <strong className="text-white block mb-0.5">Clinic Hours</strong>
                     Saturday – Thursday: 11 AM – 11 PM<br />
@@ -115,12 +115,12 @@ export function ScheduleSection() {
 
             {/* Emergency note */}
             <div
-              className="rounded-2xl p-4 text-center"
+              className="rounded-2xl p-4! text-center"
               style={{ background: "rgba(130,180,64,0.12)", border: "1px solid rgba(130,180,64,0.25)" }}
             >
               <p className="text-body-sm text-white/80">
                 🚨 <strong className="text-white">Emergency?</strong> Call{" "}
-                <a href="tel:01312612890" className="text-[var(--color-accent)] font-semibold hover:underline">
+                <a href="tel:01312612890" className="text-(--color-accent) font-semibold hover:underline">
                   01312-612890
                 </a>{" "}
                 for urgent assistance.
