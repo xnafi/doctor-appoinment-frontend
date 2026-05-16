@@ -17,9 +17,18 @@ const departments = [
 ];
 
 const timeSlots = [
-  "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM",
-  "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM",
-  "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM",
+  "11:00 AM",
+  "12:00 PM",
+  "1:00 PM",
+  "2:00 PM",
+  "3:00 PM",
+  "4:00 PM",
+  "5:00 PM",
+  "6:00 PM",
+  "7:00 PM",
+  "8:00 PM",
+  "9:00 PM",
+  "10:00 PM",
 ];
 
 interface FormState {
@@ -32,15 +41,24 @@ interface FormState {
 }
 
 const initialForm: FormState = {
-  name: "", phone: "", department: "", date: "", time: "", message: "",
+  name: "",
+  phone: "",
+  department: "",
+  date: "",
+  time: "",
+  message: "",
 };
 
 export function AppointmentSection() {
   const [form, setForm] = useState<FormState>(initialForm);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -56,12 +74,15 @@ export function AppointmentSection() {
   };
 
   return (
-    <section id="appointment" className="section-padding bg-[var(--color-surface-light)]">
+    <section
+      id="appointment"
+      className="section-padding bg-(--color-surface-light)"
+    >
       <div className="container-site">
         <SectionHeading
           label="Book Appointment"
           title="Schedule Your Consultation"
-          subtitle="Fill in the form below or call us directly. We&apos;ll confirm your appointment within 2 hours."
+          subtitle="Fill in the form below or call us directly. We'll confirm your appointment within 2 hours."
           className="mb-12"
         />
 
@@ -69,32 +90,42 @@ export function AppointmentSection() {
           {/* Form */}
           <div className="card p-8">
             {status === "success" ? (
-              <div className="flex flex-col items-center text-center gap-4 py-8">
+              <div className="flex flex-col items-center text-center gap-4 py-8! justify-end">
                 <div
                   className="w-16 h-16 rounded-full flex items-center justify-center"
                   style={{ background: "rgba(130,180,64,0.15)" }}
                 >
-                  <CalendarCheck size={32} style={{ color: "var(--color-accent)" }} aria-hidden="true" />
+                  <CalendarCheck
+                    size={32}
+                    style={{ color: "var(--color-accent)" }}
+                    aria-hidden="true"
+                  />
                 </div>
-                <h3 className="text-heading-lg text-[var(--color-primary)]">Appointment Requested!</h3>
-                <p className="text-body-md text-[var(--color-text-secondary)] max-w-sm">
-                  Thank you! We&apos;ll confirm your appointment at <strong>01312-612890</strong> within 2 hours.
+                <h3 className="text-heading-lg text-(--color-primary)">
+                  Appointment Requested!
+                </h3>
+                <p className="text-body-md text-(--color-text-secondary) max-w-sm">
+                  Thank you! We&apos;ll confirm your appointment at{" "}
+                  <strong>01312-612890</strong> within 2 hours.
                 </p>
-                <Button
-                  variant="secondary"
-                  size="md"
-                  onClick={() => setStatus("idle")}
-                >
-                  Book Another
-                </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} noValidate aria-label="Appointment booking form">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <form
+                onSubmit={handleSubmit}
+                noValidate
+                aria-label="Appointment booking form"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4!">
                   {/* Name */}
                   <div className="sm:col-span-2">
-                    <label htmlFor="name" className="block text-body-sm font-medium text-[var(--color-text-primary)] mb-1.5">
-                      Full Name <span aria-hidden="true" className="text-red-500">*</span>
+                    <label
+                      htmlFor="name"
+                      className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
+                    >
+                      Full Name{" "}
+                      <span aria-hidden="true" className="text-red-500">
+                        *
+                      </span>
                     </label>
                     <input
                       id="name"
@@ -111,8 +142,14 @@ export function AppointmentSection() {
 
                   {/* Phone */}
                   <div>
-                    <label htmlFor="phone" className="block text-body-sm font-medium text-[var(--color-text-primary)] mb-1.5">
-                      Phone Number <span aria-hidden="true" className="text-red-500">*</span>
+                    <label
+                      htmlFor="phone"
+                      className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
+                    >
+                      Phone Number{" "}
+                      <span aria-hidden="true" className="text-red-500">
+                        *
+                      </span>
                     </label>
                     <input
                       id="phone"
@@ -129,7 +166,10 @@ export function AppointmentSection() {
 
                   {/* Department */}
                   <div>
-                    <label htmlFor="department" className="block text-body-sm font-medium text-[var(--color-text-primary)] mb-1.5">
+                    <label
+                      htmlFor="department"
+                      className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
+                    >
                       Department
                     </label>
                     <select
@@ -141,14 +181,19 @@ export function AppointmentSection() {
                     >
                       <option value="">Select department</option>
                       {departments.map((d) => (
-                        <option key={d} value={d}>{d}</option>
+                        <option key={d} value={d}>
+                          {d}
+                        </option>
                       ))}
                     </select>
                   </div>
 
                   {/* Date */}
                   <div>
-                    <label htmlFor="date" className="block text-body-sm font-medium text-[var(--color-text-primary)] mb-1.5">
+                    <label
+                      htmlFor="date"
+                      className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
+                    >
                       Preferred Date
                     </label>
                     <input
@@ -164,7 +209,10 @@ export function AppointmentSection() {
 
                   {/* Time */}
                   <div>
-                    <label htmlFor="time" className="block text-body-sm font-medium text-[var(--color-text-primary)] mb-1.5">
+                    <label
+                      htmlFor="time"
+                      className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
+                    >
                       Preferred Time
                     </label>
                     <select
@@ -176,14 +224,19 @@ export function AppointmentSection() {
                     >
                       <option value="">Select time</option>
                       {timeSlots.map((t) => (
-                        <option key={t} value={t}>{t}</option>
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
                       ))}
                     </select>
                   </div>
 
                   {/* Message */}
                   <div className="sm:col-span-2">
-                    <label htmlFor="message" className="block text-body-sm font-medium text-[var(--color-text-primary)] mb-1.5">
+                    <label
+                      htmlFor="message"
+                      className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
+                    >
                       Message (optional)
                     </label>
                     <textarea
@@ -214,7 +267,7 @@ export function AppointmentSection() {
 
           {/* Info panel */}
           <div className="flex flex-col gap-6">
-            <div className="rounded-2xl overflow-hidden shadow-[var(--shadow-md)] aspect-video">
+            <div className="rounded-2xl overflow-hidden shadow-(--shadow-md) aspect-video">
               <PlaceholderImage
                 width={600}
                 height={340}
@@ -224,24 +277,29 @@ export function AppointmentSection() {
             </div>
 
             <div
-              className="rounded-2xl p-6 text-white flex flex-col gap-4"
+              className="rounded-2xl p-6! text-white flex flex-col gap-4"
               style={{ background: "var(--color-primary)" }}
             >
-              <h3 className="text-heading-md text-white">We Are Here For You</h3>
+              <h3 className="text-heading-md text-white">
+                We Are Here For You
+              </h3>
               <p className="text-body-sm text-white/75">
-                Need immediate assistance? Call our appointment line directly. Dr. Tirthankar sees patients 6 days a week.
+                Need immediate assistance? Call our appointment line directly.
+                Dr. Tirthankar sees patients 6 days a week.
               </p>
               <a
                 href="tel:01312612890"
                 className="flex items-center gap-3 mt-2 group"
                 aria-label="Call 01312-612890"
               >
-                <div className="w-12 h-12 rounded-xl bg-[var(--color-accent)] flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-(--color-accent) flex items-center justify-center shrink-0">
                   <Phone size={20} className="text-white" aria-hidden="true" />
                 </div>
                 <div>
-                  <span className="block text-body-xs text-white/60">Appointment Line</span>
-                  <span className="block text-heading-md text-white group-hover:text-[var(--color-accent)] transition-colors">
+                  <span className="block text-body-xs text-white/60">
+                    Appointment Line
+                  </span>
+                  <span className="block text-heading-md text-white group-hover:text-(--color-accent) transition-colors">
                     01312-612890
                   </span>
                 </div>

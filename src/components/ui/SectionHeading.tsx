@@ -24,14 +24,14 @@ export function SectionHeading({
   return (
     <div className={`flex flex-col ${alignClass} ${className}`}>
       {label && (
-        <span className="section-label text-label text-[var(--color-accent)]">
+        <span className="section-label text-label text-(--color-accent)">
           {label}
         </span>
       )}
       <h2 className={`text-heading-xl ${textColor} max-w-2xl`}>{title}</h2>
       <div className={`divider ${align === "center" ? "mx-auto" : ""}`} />
       {subtitle && (
-        <p className={`text-body-lg ${subtitleColor} max-w-xl mt-1`}>{subtitle}</p>
+        <p className={`text-body-lg ${subtitleColor} max-w-xl mt-1 mb-4!`}>{subtitle}</p>
       )}
     </div>
   );
