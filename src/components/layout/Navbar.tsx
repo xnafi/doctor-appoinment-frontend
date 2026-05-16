@@ -58,7 +58,7 @@ export function Navbar() {
   return (
     <>
       {/* Top bar */}
-      <div className="hidden md:block bg-(--color-primary-dark) text-white/80 text-body-xs py-2 relative z-[60]">
+      <div className="hidden md:block bg-(--color-primary-dark) text-white/80 text-body-xs py-2 relative z-60">
         <div className="container-site flex items-center justify-between">
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5">
@@ -77,7 +77,7 @@ export function Navbar() {
 
       {/* Main Navbar */}
       <header
-        className={`sticky top-0 z-[70] transition-all duration-300 ${
+        className={`sticky top-0 z-70 transition-all duration-300 ${
           scrolled
             ? "bg-white/95 backdrop-blur-md shadow-(--shadow-md)"
             : "bg-white"
@@ -92,7 +92,7 @@ export function Navbar() {
               className="flex items-center gap-3 group appearance-none bg-transparent border-0 p-0 text-left"
               aria-label="Dr. Tirthankar Bhattacharjee — Home"
             >
-              <div className="w-10 h-10 bg-(--color-primary) rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:bg-[var(--color-accent)] transition-colors duration-300">
+              <div className="w-10 h-10 bg-(--color-primary) rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:bg-(--color-accent) transition-colors duration-300">
                 <Plus size={22} strokeWidth={2.5} />
               </div>
 
@@ -114,7 +114,7 @@ export function Navbar() {
                   <button
                     type="button"
                     onClick={() => scrollToTarget(link.target)}
-                    className="px-4 py-2 text-body-sm font-medium text-(--color-text-secondary) rounded hover:text-(--color-primary) hover:bg-[var(--color-surface-light)] transition-colors duration-200 appearance-none bg-transparent border-0"
+                    className="px-4 py-2 text-body-sm font-medium text-(--color-text-secondary) rounded hover:text-(--color-primary) hover:bg-(--color-surface-light) transition-colors duration-200 appearance-none bg-transparent border-0"
                   >
                     {link.label}
                   </button>
@@ -126,7 +126,7 @@ export function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <a
                 href="tel:01312612890"
-                className="flex items-center gap-2 text-body-sm font-semibold text-(--color-primary) hover:text-[var(--color-accent)] transition-colors"
+                className="flex items-center gap-2 text-body-sm font-semibold text-(--color-primary) hover:text-(--color-accent) transition-colors"
               >
                 <Phone size={16} />
                 01312-612890
@@ -139,7 +139,7 @@ export function Navbar() {
 
             {/* Mobile Toggle */}
             <button
-              className="lg:hidden p-2 rounded-lg text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)] transition-colors appearance-none bg-transparent border-0 shrink-0 relative z-[90]"
+              className="lg:hidden p-2 rounded-lg text-(--color-text-primary) hover:bg-(--color-surface-muted) transition-colors appearance-none bg-transparent border-0 shrink-0 relative z-[90]"
               onClick={() => setIsOpen((prev) => !prev)}
               aria-expanded={isOpen}
               aria-label={isOpen ? "Close menu" : "Open menu"}

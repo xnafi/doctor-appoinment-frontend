@@ -1,34 +1,67 @@
 "use client";
 import React, { useState, FormEvent } from "react";
 import { CalendarCheck, Phone } from "lucide-react";
+import { z } from "zod";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
+const DEVICE_ID_STORAGE_KEY = "device_id";
 
+function getOrCreateDeviceId() {
+  if (typeof window === "undefined") return "";
+
+  const existing = window.localStorage.getItem(DEVICE_ID_STORAGE_KEY);
+  if (existing) return existing;
+
+  const generated =
+    typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+      ? crypto.randomUUID()
+      : `device-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+  window.localStorage.setItem(DEVICE_ID_STORAGE_KEY, generated);
+  return generated;
+}
+
+const appointmentFormSchema = z.object({
+  name: z
+    .string({ error: "Full name is required" })
+    .trim()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name is too long"),
+  phone: z
+    .string({ error: "Phone number is required" })
+    .trim()
+    .regex(/^(\+8801|01)[3-9]\d{8}$/, "Enter a valid Bangladeshi phone number"),
+  age: z.coerce.number({ error: "Age is required" }).int().min(0).max(130),
+  message: z
+    .string()
+    .trim()
+    .max(500, "Message cannot exceed 500 characters")
+    .optional(),
+});
+
+type FormFieldErrors = Partial<Record<keyof FormState, string>>;
 
 interface FormState {
-  age: string | number | readonly string[] | undefined;
+  age: string;
   name: string;
   phone: string;
-  department: string;
-  date: string;
-  time: string;
   message: string;
 }
 
 const initialForm: FormState = {
   name: "",
   phone: "",
-  department: "",
-  date: "",
-  time: "",
   message: "",
-  age: undefined
+  age: "",
 };
 
 export function AppointmentSection() {
   const [form, setForm] = useState<FormState>(initialForm);
+  const [errors, setErrors] = useState<FormFieldErrors>({});
+  const [errorMessage, setErrorMessage] = useState("");
+  const [bookingNumber, setBookingNumber] = useState<number | null>(null);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -40,15 +73,72 @@ export function AppointmentSection() {
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setStatus("idle");
+    setErrorMessage("");
+    setBookingNumber(null);
+
+    const parsed = appointmentFormSchema.safeParse(form);
+    if (!parsed.success) {
+      const fieldErrors: FormFieldErrors = {};
+      for (const issue of parsed.error.issues) {
+        const field = issue.path[0] as keyof FormState | undefined;
+        if (field && !fieldErrors[field]) {
+          fieldErrors[field] = issue.message;
+        }
+      }
+      setErrors(fieldErrors);
+      setStatus("error");
+      return;
+    }
+
+    setErrors({});
     setStatus("loading");
-    // Simulate async submit
-    await new Promise((res) => setTimeout(res, 1500));
-    setStatus("success");
-    setForm(initialForm);
+
+    const trimmedMessage = parsed.data.message?.trim();
+
+    const payload = {
+      patientName: parsed.data.name,
+      phone: parsed.data.phone,
+      age: parsed.data.age,
+      message: trimmedMessage ? trimmedMessage : undefined,
+    };
+
+    const deviceId = getOrCreateDeviceId();
+
+    try {
+      const res = await fetch(`/api/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Device-ID": deviceId,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data: {
+        success?: boolean;
+        message?: string;
+        data?: { serialNumber?: number };
+      } = await res.json();
+
+      if (!res.ok || !data.success) {
+        setErrorMessage(data.message || "Failed to submit appointment request");
+        setStatus("error");
+        return;
+      }
+
+      setStatus("success");
+      setBookingNumber(data.data?.serialNumber ?? null);
+      setForm(initialForm);
+    } catch {
+      setErrorMessage("Network error. Please try again.");
+      setStatus("error");
+    }
   };
 
   return (
@@ -86,6 +176,11 @@ export function AppointmentSection() {
                   Thank you! We&apos;ll confirm your appointment at{" "}
                   <strong>01312-612890</strong> within 2 hours.
                 </p>
+                {bookingNumber ? (
+                  <p className="text-body-md text-(--color-primary)">
+                    Your booking number is <strong>#{bookingNumber}</strong>.
+                  </p>
+                ) : null}
               </div>
             ) : (
               <form
@@ -93,7 +188,7 @@ export function AppointmentSection() {
                 noValidate
                 aria-label="Appointment booking form"
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4!">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4! mt-4!">
                   {/* Name */}
                   <div className="sm:col-span-2">
                     <label
@@ -116,6 +211,9 @@ export function AppointmentSection() {
                       value={form.name}
                       onChange={handleChange}
                     />
+                    {errors.name && (
+                      <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                    )}
                   </div>
 
                   {/* Phone */}
@@ -140,6 +238,11 @@ export function AppointmentSection() {
                       value={form.phone}
                       onChange={handleChange}
                     />
+                    {errors.phone && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.phone}
+                      </p>
+                    )}
                   </div>
 
                   {/* age */}
@@ -148,7 +251,7 @@ export function AppointmentSection() {
                       htmlFor="age"
                       className="block text-body-sm font-medium text-(--color-text-primary) mb-1.5"
                     >
-                      Phone Number{" "}
+                      Age{" "}
                       <span aria-hidden="true" className="text-red-500">
                         *
                       </span>
@@ -159,10 +262,13 @@ export function AppointmentSection() {
                       type="number"
                       required
                       className="input"
-                      placeholder="age"
+                      placeholder="Your age"
                       value={form.age}
                       onChange={handleChange}
                     />
+                    {errors.age && (
+                      <p className="mt-1 text-sm text-red-600">{errors.age}</p>
+                    )}
                   </div>
 
                   {/* Message */}
@@ -182,6 +288,11 @@ export function AppointmentSection() {
                       value={form.message}
                       onChange={handleChange}
                     />
+                    {errors.message && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -195,6 +306,11 @@ export function AppointmentSection() {
                 >
                   {status === "loading" ? "Booking..." : "Make Appointment"}
                 </Button>
+                {status === "error" && errorMessage && (
+                  <p className="my-3! px-4! text-sm text-red-600" role="alert">
+                    {errorMessage}
+                  </p>
+                )}
               </form>
             )}
           </div>
